@@ -28,6 +28,7 @@
       <Button fx:id="button5" layoutX="503.0" layoutY="96.0" mnemonicParsing="false" onAction="#vaccine2" text="Vaccine 2" />
       <Button fx:id="button6" layoutX="503.0" layoutY="127.0" mnemonicParsing="false" onAction="#vaccine3" text="Vaccine 3" />
       <Button fx:id="button7" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#resetVaccineButton" text="Reset vaccine status" />
+      <Text layoutX="13.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dates must be in following format: yyyy-mm-dd" wrappingWidth="279.20001220703125" />
       
    </children>
 </Pane>
