@@ -20,6 +20,9 @@ public class PrimaryController {
     @FXML
     private TextArea textArea4 = new TextArea();
     
+    @FXML
+    private TextArea textArea5 = new TextArea();
+    
             //Benytter Regular Expression (RegEx) til at tjekke om en String overholder
             //det gældende dato format. Koden er taget fra Baeldung.com
     private static Pattern DATE_PATTERN = Pattern.compile(
@@ -74,15 +77,30 @@ public class PrimaryController {
            //er det som står i SSN tekstfeltet i programmet
            ResultSet rs = stmt.executeQuery("SELECT * FROM MOCK_DATA WHERE ssn = " + "\"" + textArea2.getText() + "\"");
            
-            //Mens vi har resultaterne, udskrives den gældende persons information i tekstfelt 1
+            //Hvis vi har resultaterne, udskrives den gældende persons information i tekstfelt 1
             //Det store tekstfelt i programmet
-           while(rs.next()){
+           if(rs.next()){
             textArea1.setText(textArea1.getText() + "ID: " + rs.getString("ID") + " | SSN: " + rs.getString("ssn") +
             " \nFirst name: " + rs.getString("first_name") + " \nLast name: " + rs.getString("last_name") +
             " \nGender: " + rs.getString("gender") + " | Age: " + rs.getString("age") +
-            " \nInfection status: " + rs.getString("infection_status") + " | Date of infection: " + rs.getString("infection_date") +
-            " \nVaccine status: " + rs.getString("vaccine_status") + " | Date of last vaccination: " + rs.getString("last_vaccine_date")
+            " \nInfection status: " + rs.getString("infection_status") + " \nDate of last infection: " + rs.getString("last_infection_date") + 
+            " | Date of last recovery: " + rs.getString("last_recovery_date") + " \nVaccine status: " + rs.getString("vaccine_status") + 
+            " \nDate of first vaccination: " + rs.getString("first_vaccine_date") + " \nDate of second vaccination: " + rs.getString("second_vaccine_date") + 
+            " \nDate of third vaccination: " + rs.getString("third_vaccine_date")
             );
+            
+            //Fjerner teksten i datofelterne når getData() kaldes
+            textArea3.setText("");
+            textArea4.setText("");
+            textArea5.setText("");
+            
+            //Hvis inputtet ikke giver et resultat bedes brugeren om at inputte et gyldigt personnummer
+           }else{
+               textArea1.setText("Please input a valid social security number!");
+               
+               textArea3.setText("");
+               textArea4.setText("");
+               textArea5.setText("");
            }
         }
             //Fejlhåndtering
@@ -119,9 +137,9 @@ public class PrimaryController {
     boolean date = dateMatch(textArea3.getText());
     
      //Hvis RegEx tjekket var positivt, og date derfor er true skrives et UPDATE statement
-     //infection_status opdateres til 1, og infection_date opdateres til datoen i tekstfelt 3
+     //infection_status opdateres til 1, og last_infection_date opdateres til datoen i tekstfelt 3
     if(date == true){    
-        sql = "UPDATE MOCK_DATA SET infection_status = 1, infection_date = " + "\"" + textArea3.getText() + "\" WHERE ssn = " + 
+        sql = "UPDATE MOCK_DATA SET infection_status = 1, last_infection_date = " + "\"" + textArea3.getText() + "\" WHERE ssn = " + 
             "\"" + textArea2.getText() + "\";";
      //Hvis RegEx tjekket var negativt, og date derfor er false, bedes brugeren om at inputte en gyldig dato
      //Der skrives ikke et UPDATE statement
@@ -142,12 +160,12 @@ public class PrimaryController {
      }
     }
     
-     //updateInfection0() skal ændre den gældende persons infection_status til 0, og infection_date til null
+     //updateInfection0() skal ændre den gældende persons infection_status til 0, og last_recovery_date til datoen i tekstfelt 5
      //Denne virker på præcis samme måde som updateInfection1() med undtagelse af ændringen i UPDATE statementet
     void updateInfection0() throws ClassNotFoundException, SQLException{
     Connection conn = null;
 
-    String sql;
+    String sql = null;
     
     try{
             Class.forName("org.sqlite.JDBC");
@@ -157,8 +175,14 @@ public class PrimaryController {
         System.out.println("DB Error: " + e.getMessage());
     }
     
-    sql = "UPDATE MOCK_DATA SET infection_status = 0, infection_date = NULL WHERE ssn = " + "\"" + textArea2.getText() + "\"";
+    boolean date = dateMatch(textArea5.getText());
     
+    if(date == true){
+        sql = "UPDATE MOCK_DATA SET infection_status = 0, last_recovery_date = " + "\"" + textArea5.getText() + "\" WHERE ssn = " + 
+            "\"" + textArea2.getText() + "\";";
+    } else{
+        textArea1.setText("Please input a valid date!");
+    }
     
     
     try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -170,7 +194,7 @@ public class PrimaryController {
     }
     
      //updateVaccine1() skal opdatere den gældende persons vaccine_status til 1,
-     //og ændre last_vaccine_date til den gyldige dato i tekstfelt 4
+     //og ændre first_vaccine_date til den gyldige dato i tekstfelt 4
      //Overordnet virker denne metode på samme måde som de to foregående (se detaljeret beskrivelse under updateInfection1())
      //Alle undtagelse beskrives herunder
     void updateVaccine1() throws ClassNotFoundException, SQLException{
@@ -218,7 +242,7 @@ public class PrimaryController {
      //Da ændringerne sker med knapper, kan tallet ikke være andet end 0 (hvor det starter i databasen)
      //1, 2 eller 3
     } else{
-        sql = "UPDATE MOCK_DATA SET vaccine_status = 1, last_vaccine_date = " + "\"" + textArea4.getText() + "\" WHERE ssn = " + 
+        sql = "UPDATE MOCK_DATA SET vaccine_status = 1, first_vaccine_date = " + "\"" + textArea4.getText() + "\" WHERE ssn = " + 
             "\"" + textArea2.getText() + "\";";
     }
      //Hvis strengen i tekstfelt 4 ikke er en gyldig dato skrives til til brugeren
@@ -235,7 +259,7 @@ public class PrimaryController {
      }
     }
     
-     //updateVaccine2() skal ændre den gældende persons vaccine_status til 2, og ændre last_vaccine_date
+     //updateVaccine2() skal ændre den gældende persons vaccine_status til 2, og ændre second_vaccine_date
      //Metoden virker på præcis samme måde som updateVaccine1() med untagelse af ændringen i UPDATE statementet
     void updateVaccine2() throws ClassNotFoundException, SQLException{
     Connection conn = null;
@@ -273,7 +297,7 @@ public class PrimaryController {
         textArea1.setText("Person has not recieved first vaccination!");
         //Altså, hvis tallet er 1, ændres det til 2 og dato opdateres
     }else{
-        sql = "UPDATE MOCK_DATA SET vaccine_status = 2, last_vaccine_date = " + "\"" + textArea4.getText() + "\" WHERE ssn = " + 
+        sql = "UPDATE MOCK_DATA SET vaccine_status = 2, second_vaccine_date = " + "\"" + textArea4.getText() + "\" WHERE ssn = " + 
             "\"" + textArea2.getText() + "\";";
         System.out.println(vacStat);
     }
@@ -292,7 +316,7 @@ public class PrimaryController {
      }
     }
     
-     //updateVaccine3() skal ændre vaccine_status til 3 og opdatere last_vaccine_date
+     //updateVaccine3() skal ændre vaccine_status til 3 og opdatere third_vaccine_date
      //Metoden virker på præcis samme måde som updateVaccine1() og updateVaccine2()
     void updateVaccine3() throws ClassNotFoundException, SQLException{
     Connection conn = null;
@@ -330,7 +354,7 @@ public class PrimaryController {
         textArea1.setText("Person has already recieved third vaccination!");
         //Altså, hvis tallet er 2, opdateres det til 3, og datoen opdateres
     } else{
-        sql = "UPDATE MOCK_DATA SET vaccine_status = 3, last_vaccine_date = " + "\"" + textArea4.getText() + "\" WHERE ssn = " + 
+        sql = "UPDATE MOCK_DATA SET vaccine_status = 3, third_vaccine_date = " + "\"" + textArea4.getText() + "\" WHERE ssn = " + 
             "\"" + textArea2.getText() + "\";";
         System.out.println(vacStat);
     }
@@ -365,7 +389,34 @@ public class PrimaryController {
         System.out.println("DB Error: " + e.getMessage());
     }
     
-        sql = "UPDATE MOCK_DATA SET vaccine_status = 0, last_vaccine_date = NULL WHERE ssn = " + 
+        sql = "UPDATE MOCK_DATA SET vaccine_status = 0, first_vaccine_date = NULL, second_vaccine_date = NULL, "
+                + "third_vaccine_date = NULL WHERE ssn = " + "\"" + textArea2.getText() + "\";";
+    
+    try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    pstmt.execute();
+    conn.close();
+    } catch(SQLException e) {
+    System.out.println(e.getMessage());
+     }
+    }
+    
+     //resetInfection har samme formål som resetVaccine(), og skal kun bruges til testing da man 
+     //ikke burde kunne fjerne data fra databasen på denne måde
+     //De to metoder virker på samme måde
+    void resetInfection() throws ClassNotFoundException, SQLException {
+    Connection conn = null;
+    
+    String sql = null;
+    
+    try{
+            Class.forName("org.sqlite.JDBC");
+        conn = DriverManager.getConnection("jdbc:sqlite:src/DATA.db");
+    }
+    catch(SQLException e){
+        System.out.println("DB Error: " + e.getMessage());
+    }
+    
+    sql = "UPDATE MOCK_DATA SET infection_status = 0, last_infection_date = NULL, last_recovery_date = NULL WHERE ssn = " + 
             "\"" + textArea2.getText() + "\";";
     
     try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -428,12 +479,23 @@ public class PrimaryController {
     getData();
     }
     
-     //resetVaccineButton() kalder resetVaccine(), og sætter den gældende persons vaccine_status til 0 og last_vaccine_date til null
+     //resetVaccineButton() kalder resetVaccine(), og sætter den gældende persons vaccine_status til 0 og
+     //first_vaccine_date, second_vaccine_date og third_vaccine_date til null
      //til testing, henter data
     @FXML
     private void resetVaccineButton() throws IOException, ClassNotFoundException, SQLException {
     resetVaccine();
     textArea1.setText("");
     getData();
-    }   
+    }
+    
+     //resetInfectionButton klader resetInfection(), og sætter infection_status til 0 og
+     //last_vaccine_date og last_recovery_date till null
+     //til testing, henter data
+    @FXML
+    private void resetInfectionButton() throws IOException, ClassNotFoundException, SQLException {
+    resetInfection();
+    textArea1.setText("");
+    getData();
+    }
 }

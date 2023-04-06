@@ -7,28 +7,31 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.coviddatabase.PrimaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.coviddatabase.PrimaryController">
    <children>
-      <TextArea id="text_area" fx:id="textArea1" layoutX="72.0" layoutY="157.0" prefHeight="140.0" prefWidth="456.0" />
-      <Button fx:id="button1" layoutX="234.0" layoutY="77.0" mnemonicParsing="false" onAction="#onButtonPressed" text="Get data" />
-      <TextArea fx:id="textArea2" layoutX="72.0" layoutY="70.0" prefHeight="0.0" prefWidth="100.0" />
-      <ImageView fitHeight="76.0" fitWidth="131.0" layoutX="459.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+      <TextArea id="text_area" fx:id="textArea1" layoutX="38.0" layoutY="160.0" prefHeight="182.0" prefWidth="524.0" />
+      <Button fx:id="button1" layoutX="176.0" layoutY="73.0" mnemonicParsing="false" onAction="#onButtonPressed" text="Get data" />
+      <TextArea fx:id="textArea2" layoutX="14.0" layoutY="66.0" prefHeight="0.0" prefWidth="100.0" />
+      <ImageView fitHeight="87.0" fitWidth="143.0" layoutX="447.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="file:/C:/Users/tbech/Documents/NetBeansProjects/CovidDatabase/src/Injectlytics.png" />
          </image>
       </ImageView>
-      <Text layoutX="72.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Social Security Number" wrappingWidth="162.06719970703125" />
-      <TextArea fx:id="textArea3" layoutX="339.0" layoutY="22.0" prefHeight="0.0" prefWidth="100.0" />
+      <Text layoutX="14.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Social Security Number" wrappingWidth="162.06719970703125" />
+      <TextArea fx:id="textArea3" layoutX="292.0" layoutY="35.0" prefHeight="0.0" prefWidth="100.0" />
       <TextArea fx:id="textArea4" layoutX="486.0" layoutY="22.0" prefHeight="0.0" prefWidth="100.0" />
-      <Text layoutX="339.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of infection" wrappingWidth="162.06719970703125" />
+      <Text layoutX="292.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of last infection" wrappingWidth="162.06719970703125" />
       <Text layoutX="486.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of last vaccine" wrappingWidth="162.06719970703125" />
-      <Button fx:id="button2" layoutX="360.0" layoutY="65.0" mnemonicParsing="false" onAction="#infected" text="Infected" />
-      <Button fx:id="button3" layoutX="353.0" layoutY="102.0" mnemonicParsing="false" onAction="#notInfected" text="Recovered" />
+      <Button fx:id="button2" layoutX="399.0" layoutY="42.0" mnemonicParsing="false" onAction="#infected" text="Infected" />
+      <Button fx:id="button3" layoutX="399.0" layoutY="101.0" mnemonicParsing="false" onAction="#notInfected" text="Recovered" />
       <Button fx:id="Button4" layoutX="503.0" layoutY="65.0" mnemonicParsing="false" onAction="#vaccine1" text="Vaccine 1" />
       <Button fx:id="button5" layoutX="503.0" layoutY="96.0" mnemonicParsing="false" onAction="#vaccine2" text="Vaccine 2" />
       <Button fx:id="button6" layoutX="503.0" layoutY="127.0" mnemonicParsing="false" onAction="#vaccine3" text="Vaccine 3" />
       <Button fx:id="button7" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#resetVaccineButton" text="Reset vaccine status" />
       <Text layoutX="13.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dates must be in following format: yyyy-mm-dd" wrappingWidth="279.20001220703125" />
+      <TextArea fx:id="textArea5" layoutX="292.0" layoutY="94.0" prefHeight="0.0" prefWidth="100.0" />
+      <Text layoutX="292.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of last recovery" wrappingWidth="162.06719970703125" />
+      <Button fx:id="button8" layoutX="14.0" layoutY="396.0" mnemonicParsing="false" onAction="#resetInfectionButton" text="Reset infection status" />
       
    </children>
 </Pane>
