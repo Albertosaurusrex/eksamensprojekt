@@ -14,7 +14,7 @@
       <TextArea fx:id="textArea2" layoutX="14.0" layoutY="66.0" prefHeight="0.0" prefWidth="100.0" />
       <ImageView fitHeight="87.0" fitWidth="143.0" layoutX="447.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/C:/Users/tbech/Documents/NetBeansProjects/CovidDatabase/src/Injectlytics.png" />
+            <Image url="@Injectlytics.png" />
          </image>
       </ImageView>
       <Text layoutX="14.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Social Security Number" wrappingWidth="162.06719970703125" />
